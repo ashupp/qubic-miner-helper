@@ -106,5 +106,17 @@ namespace qubic_miner_helper.Properties {
                 this["MinerID"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("90")]
+        public string WaitForResponseBeforeWorkerRestartSeconds {
+            get {
+                return ((string)(this["WaitForResponseBeforeWorkerRestartSeconds"]));
+            }
+            set {
+                this["WaitForResponseBeforeWorkerRestartSeconds"] = value;
+            }
+        }
     }
 }

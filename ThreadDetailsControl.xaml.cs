@@ -19,6 +19,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml;
 using CliWrap;
+using qubic_miner_helper.Properties;
 using Xceed.Wpf.Toolkit.Core.Converters;
 using Timer = System.Timers.Timer;
 
@@ -144,7 +145,7 @@ namespace qubic_miner_helper
 
         private void ActiveTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (lastUpdateDateTime != null && lastUpdateDateTime < DateTime.Now.Subtract(new TimeSpan(0,0,2,0)))
+            if (lastUpdateDateTime != null && lastUpdateDateTime < DateTime.Now.Subtract(new TimeSpan(0,0,Settings.Default.MinRoundsWaitBeforeLaunchAgain)))
             {
                 Console.WriteLine("Miner Inactive....restarting");
                 Dispatcher.Invoke(() => RestartThread());
