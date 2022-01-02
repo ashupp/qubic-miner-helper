@@ -1,0 +1,38 @@
+﻿<Window x:Class="qubic_miner_helper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:qubic_miner_helper"
+        xmlns:properties="clr-namespace:qubic_miner_helper.Properties"
+        mc:Ignorable="d"
+        DataContext="{x:Static properties:Settings.Default}"
+        Title="Qubic-miner thread / worker helper" Height="919" Width="1154" Closed="Window_Closed" ResizeMode="CanResizeWithGrip">
+    <Grid HorizontalAlignment="Left" Width="1132">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1123*"/>
+            <ColumnDefinition Width="9*"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Start / Stop All" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Width="90" Height="37" Click="Button_Click"/>
+        <Button Content="Set Miner Path" HorizontalAlignment="Left" Margin="758,63,0,0" VerticalAlignment="Top" Width="117" Click="SetMinerPathClick" Height="20"/>
+        <TextBox Name="minerPath" HorizontalAlignment="Left" Height="23" Margin="141,63,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="612" />
+        <Border Margin="10,213,0,10" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1" HorizontalAlignment="Left" Width="1110">
+            <ScrollViewer x:Name="propertyScrollViewer" Height="auto" VerticalAlignment="Stretch" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Margin="0,0,9,0">
+                <StackPanel x:Name="propertySliderStackPanel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            </ScrollViewer>
+
+        </Border>
+        <Button Content="+" HorizontalAlignment="Left" Margin="293,10,0,0" VerticalAlignment="Top" Width="22" Click="AddThreadClick" Unloaded="Button_Unloaded" Height="20"/>
+        <Button Content="-" HorizontalAlignment="Left" Margin="293,40,0,0" VerticalAlignment="Top" Width="22" Height="18" RenderTransformOrigin="2.591,0.444" Click="RemoveThreadClick"/>
+        <TextBox Name="ThreadCount" HorizontalAlignment="Left" Height="47" Margin="209,10,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="77" FontSize="36" TextAlignment="Center"/>
+        <Label Content="Workers:" HorizontalAlignment="Left" Margin="151,22,0,0" VerticalAlignment="Top" Height="26" Width="65"/>
+        <Label Content="Worker Information:" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top" Height="26" Width="125"/>
+        <CheckBox Name="CheckBoxAutostartOnOpen" Content="Worker Autostart on open" HorizontalAlignment="Left" Margin="333,10,0,0" VerticalAlignment="Top" Checked="CheckBoxAutostartOnOpen_OnChecked" Unchecked="CheckBoxAutostartOnOpen_OnUnchecked" Height="15" Width="157"/>
+        <Button Content="Set Command Line" HorizontalAlignment="Left" Margin="758,93,0,0" VerticalAlignment="Top" Width="117" Click="SetMinerIDClick" Height="20"/>
+        <TextBox x:Name="minerID" HorizontalAlignment="Left" Height="23" Margin="141,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="612" />
+        <Label Content="Command line:" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.105,0.154" Width="90" Height="26"/>
+        <Label Content="Miner Path:" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.105,0.154" Width="90" Height="26"/>
+        <Label Content="Overall Iterations/s: " HorizontalAlignment="Left" Margin="10,178,0,0" VerticalAlignment="Top" Width="125" Height="26"/>
+        <TextBox HorizontalAlignment="Left" Name="IterationsOverallBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="145" Margin="141,181,0,0"/>
+    </Grid>
+</Window>
