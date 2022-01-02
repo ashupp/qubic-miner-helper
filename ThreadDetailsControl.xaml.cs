@@ -459,5 +459,10 @@ namespace qubic_miner_helper
             
 
         }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            RestartThread();
+        }
     }
 }

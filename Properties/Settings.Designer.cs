@@ -49,49 +49,13 @@ namespace qubic_miner_helper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AutoProcessFastestOnTresholdReached {
-            get {
-                return ((bool)(this["AutoProcessFastestOnTresholdReached"]));
-            }
-            set {
-                this["AutoProcessFastestOnTresholdReached"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("50000000")]
-        public double Threshold {
-            get {
-                return ((double)(this["Threshold"]));
-            }
-            set {
-                this["Threshold"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int ThreadCount {
             get {
                 return ((int)(this["ThreadCount"]));
             }
             set {
                 this["ThreadCount"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int MinRoundsWaitBeforeLaunchAgain {
-            get {
-                return ((int)(this["MinRoundsWaitBeforeLaunchAgain"]));
-            }
-            set {
-                this["MinRoundsWaitBeforeLaunchAgain"] = value;
             }
         }
         

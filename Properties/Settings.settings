@@ -8,17 +8,8 @@
     <Setting Name="AutoStart" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="AutoProcessFastestOnTresholdReached" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="Threshold" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">50000000</Value>
-    </Setting>
     <Setting Name="ThreadCount" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="MinRoundsWaitBeforeLaunchAgain" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="MinerID" Type="System.String" Scope="User">
       <Value Profile="(Default)">INSERTYOURIDHERE THREADCOUNTHERE</Value>
