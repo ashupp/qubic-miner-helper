@@ -33,6 +33,6 @@
         <Label Content="Command line:" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.105,0.154" Width="90" Height="26"/>
         <Label Content="Miner Path:" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.105,0.154" Width="90" Height="26"/>
         <Label Content="Overall Iterations/s: " HorizontalAlignment="Left" Margin="10,178,0,0" VerticalAlignment="Top" Width="125" Height="26"/>
-        <TextBox HorizontalAlignment="Left" Name="IterationsOverallBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="145" Margin="141,181,0,0"/>
+        <TextBox HorizontalAlignment="Left" IsEnabled="False" Name="IterationsOverallBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="145" Margin="141,181,0,0"/>
     </Grid>
 </Window>

@@ -110,9 +110,9 @@ namespace qubic_miner_helper.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("90")]
-        public string WaitForResponseBeforeWorkerRestartSeconds {
+        public int WaitForResponseBeforeWorkerRestartSeconds {
             get {
-                return ((string)(this["WaitForResponseBeforeWorkerRestartSeconds"]));
+                return ((int)(this["WaitForResponseBeforeWorkerRestartSeconds"]));
             }
             set {
                 this["WaitForResponseBeforeWorkerRestartSeconds"] = value;

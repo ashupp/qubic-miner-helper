@@ -43,7 +43,7 @@ namespace qubic_miner_helper
         private DateTime launchDateTime;
 
         private Timer activeTimer;
-
+        private TimeSpan waitUntilTimeout;
 
         public int ThreadIndex;
         private int restartCounter;
@@ -136,6 +136,16 @@ namespace qubic_miner_helper
 
         public void Init()
         {
+            try
+            {
+                waitUntilTimeout = TimeSpan.FromSeconds(Properties.Settings.Default.WaitForResponseBeforeWorkerRestartSeconds);
+            }
+            catch (Exception e)
+            {
+                waitUntilTimeout = TimeSpan.FromSeconds(90);
+            }
+            
+
             thread1 = new Thread(DoWork);
             thread1.Start();
             
@@ -145,7 +155,7 @@ namespace qubic_miner_helper
 
         private void ActiveTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (lastUpdateDateTime != null && lastUpdateDateTime < DateTime.Now.Subtract(new TimeSpan(0,0,Settings.Default.MinRoundsWaitBeforeLaunchAgain)))
+            if (lastUpdateDateTime != null && lastUpdateDateTime < DateTime.Now.Subtract(waitUntilTimeout))
             {
                 Console.WriteLine("Miner Inactive....restarting");
                 Dispatcher.Invoke(() => RestartThread());
@@ -318,8 +328,7 @@ namespace qubic_miner_helper
                     Dispatcher.Invoke(() =>
                     {
                         ErrorsBox.Text = errBoxTextTmp;
-                        Errors = Double.Parse(errBoxTextTmp, System.Globalization.NumberStyles.AllowDecimalPoint, System.Globalization.NumberFormatInfo.InvariantInfo);
-                        Console.WriteLine(Errors);
+                        Errors = Double.Parse(errBoxTextTmp, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
                     });
                 }
 
@@ -331,114 +340,6 @@ namespace qubic_miner_helper
 
             }
 
-            /*
-            try
-            {
-                if (eData.Contains("You are"))
-                {
-                    var errBoxTextTmp = eData.Split(new string[] { "You are " }, StringSplitOptions.None)[1].Split(new string[] { " errors" }, StringSplitOptions.None)[0];
-                    Dispatcher.Invoke(() =>
-                    {
-                        Errors = Convert.ToDouble(errBoxTextTmp);
-                    });
-                }
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error during loading of errors. " + e.Message);
-                Dispatcher.Invoke(() => Errors = -1);
-
-            }
-            */
-
-     
-
-            /*
-            var splitData = eData.Split('|');
-
-            try
-            {
-
-                Dispatcher.Invoke(() => Iterations = Convert.ToInt32(splitData[0].Split('#')[1].Trim()));
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error during loading of iterations. " + e.Message);
-                Dispatcher.Invoke(() => Iterations = -1);
-            }
-
-
-            try
-            {
-                Dispatcher.Invoke(() => Errors = Convert.ToDouble(splitData[1].Split('=')[1].Trim()));
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error during loading of errors. " + e.Message);
-                Dispatcher.Invoke(() => Errors = -1);
-
-            }
-
-            try
-            {
-                Dispatcher.Invoke(() => Layers = Convert.ToInt32(splitData[2].Split('=')[1].Trim()));
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error during loading of layers. " + e.Message);
-                Dispatcher.Invoke(() => Layers = -1);
-            }
-
-
-            try
-            {
-                Dispatcher.Invoke(() => Neurons = Convert.ToInt32(splitData[3].Split('=')[1].Trim()));
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error during loading of neurons. " + e.Message);
-                Dispatcher.Invoke(() => Neurons = -1);
-
-            }
-
-
-            try
-            {
-                var myTimePartOne = splitData[4].Split('=')[1].Trim();
-                var myTimePartTwo = myTimePartOne.Split(new string[] { "ms" }, StringSplitOptions.None)[0].Trim();
-
-                Dispatcher.Invoke(() => Time = Convert.ToDouble(myTimePartTwo));
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error during loading of time. " + e.Message);
-                Dispatcher.Invoke(() => Time = -1);
-
-            }
-            
-            Dispatcher?.Invoke(
-                DispatcherPriority.Normal,
-                new Action(() =>
-                {
-                    IterationBox.Text = Iterations.ToString();
-                    ErrorsBox.Text = Errors.ToString();
-                    TimeBox.Text = Time.ToString();
-                    LayersBox.Text = Layers.ToString();
-                    NeuronsBox.Text = Neurons.ToString();
-                }));
-
-
-            if (ThreadUpdated != null)
-            {
-                ThreadUpdated(this, EventArgs.Empty);
-            }
-            */
         }
             
 
@@ -446,8 +347,6 @@ namespace qubic_miner_helper
 
         {
             Dispatcher.Invoke(() => uiElement.InvalidateVisual());
-
-            //uiElement.Dispatcher.Invoke(DispatcherPriority.Render, new );
         }
 
         #region Members
@@ -521,25 +420,6 @@ namespace qubic_miner_helper
                 SetValueClicked(this, args);
             }
         }
-
-        private void btnResetDefault_Click(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine("Exit this");
-            /*
-            MessageBoxResult messageBoxResult = MessageBox.Show("Reset to default (Value:" + DefaultValue + ")", "Are you sure?", MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
-            {
-                if (DefaultValueClicked == null) return;
-                propertySlider.Value = DefaultValue;
-                var args = new KeyValueEventArgs()
-                {
-                    Key = Key,
-                    Value = Convert.ToInt32(DefaultValue)
-                };
-                DefaultValueClicked(this, args);
-            }*/
-        }
-
         #endregion
 
         public void RestartThread()

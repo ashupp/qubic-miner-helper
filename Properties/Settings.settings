@@ -23,7 +23,7 @@
     <Setting Name="MinerID" Type="System.String" Scope="User">
       <Value Profile="(Default)">INSERTYOURIDHERE THREADCOUNTHERE</Value>
     </Setting>
-    <Setting Name="WaitForResponseBeforeWorkerRestartSeconds" Type="System.String" Scope="User">
+    <Setting Name="WaitForResponseBeforeWorkerRestartSeconds" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">90</Value>
     </Setting>
   </Settings>

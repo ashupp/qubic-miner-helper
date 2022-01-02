@@ -1,22 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 using Microsoft.Win32;
-using qubic_miner_helper.Properties;
 using Timer = System.Timers.Timer;
 
 namespace qubic_miner_helper
@@ -30,11 +16,7 @@ namespace qubic_miner_helper
         private int ThreadIndex = 0;
         private bool isRunning = false;
         private int fastestThread = -1;
-        private double lowestErrorCount = -1;
-        private double secondLowestErrorCount = -1;
         public MainWindow mainWindowRef;
-        public int testInt = 0;
-        public double IterationsOverall = 0;
         private Timer collectDataTimer;
 
 
@@ -57,26 +39,11 @@ namespace qubic_miner_helper
             _threadDetailsControlsList = new Dictionary<int, ThreadDetailsControl>();
             propertySliderStackPanel.Children.Clear();
 
-            /*PipeReader pReader = new PipeReader();
-            pReader.Start();
-            pReader.DataReceived += PReader_DataReceived;
-            */
-
-            // Alle Threads initialisieren
-
             if (Properties.Settings.Default.AutoStart)
             {
                 StartAllThreads();
             }
         }
-
-        /*
-        private void PReader_DataReceived(object sender, EventArgs e)
-        {
-            var tmp = e as PipeReader.DataReceivedEventArgs;
-
-            Console.WriteLine("Data received: " + tmp.Data);
-        }*/
 
         private void SetMinerPathClick(object sender, RoutedEventArgs e)
         {
@@ -137,7 +104,7 @@ namespace qubic_miner_helper
             var iterationsOverall = CollectIterations();
             Dispatcher.Invoke(() =>
             {
-                IterationsOverallBox.Text = iterationsOverall.ToString();
+                IterationsOverallBox.Text = iterationsOverall.ToString().Replace(",",".");
             });
            
         }
@@ -201,62 +168,6 @@ namespace qubic_miner_helper
             StopAllThreads();
             Console.WriteLine("Go home :)");
         }
-
-        private void checkAndCopyToFastestClick(object sender, RoutedEventArgs e)
-        {
-           //checkAndCopyToFastest();
-        }
-
-        /*
-        private void checkAndCopyToFastest()
-        {
-            double minErrors = -1;
-            ThreadDetailsControl fastestThreadControl = null;
-
-            foreach (var threadDetails in _threadDetailsControlsList)
-            {
-                Dispatcher.Invoke(() => threadDetails.Value.Background = new SolidColorBrush(Colors.LightGray));
-                if ((minErrors == -1 || threadDetails.Value.Errors < minErrors) && threadDetails.Value.Time > 0)
-                {
-                    //secondLowestErrorCount = minErrors;
-                    minErrors = threadDetails.Value.Errors;
-                    fastestThread = threadDetails.Key;
-                    fastestThreadControl = threadDetails.Value;
-                    Dispatcher.Invoke(() => fastestThreadControl.Background = new SolidColorBrush(Colors.LightGray));
-                }
-            }
-
-            if (fastestThread != null)
-            {
-                Dispatcher.Invoke(() => fastestThreadIndex.Text = fastestThread.ToString());
-                if (fastestThreadControl != null)
-                {
-                    if (fastestThreadControl.Errors >= 0 && fastestThreadControl.Time > 0)
-                    {
-                        if (fastestThreadControl.Errors < lowestErrorCount)
-                        {
-                            secondLowestErrorCount = lowestErrorCount;
-                        }
-
-                        fastestThread = fastestThreadControl.ThreadIndex;
-                        lowestErrorCount = fastestThreadControl.Errors;
-                        minErrors = lowestErrorCount;
-                        if (secondLowestErrorCount > lowestErrorCount)
-                        {
-                            Dispatcher.Invoke(() => this.ErrdiffFastestNext.Text = (secondLowestErrorCount - lowestErrorCount).ToString());
-                        }
-                        Console.WriteLine(fastestThreadControl.Time + " -- " + fastestThreadControl.ThreadIndex);
-                        Console.WriteLine("Lowest Error count: " + lowestErrorCount);
-                        Console.WriteLine("Second Lowest Error count: " + secondLowestErrorCount);
-                        Dispatcher.Invoke(() => fastestThreadControl.Background = new SolidColorBrush(Colors.LightGreen));
-                    }
-                }
-            }
-            
-
-        }
-        */
-
 
         private void StartAllThreads()
         {
@@ -335,11 +246,6 @@ namespace qubic_miner_helper
             }
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            propertyScrollViewer.InvalidateVisual();
-            propertyScrollViewer.UpdateLayout();
-        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -352,12 +258,7 @@ namespace qubic_miner_helper
                 StartAllThreads();
             }
         }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+        
 
         private void AutoStartOnOpenCheckboxClicked(object sender, RoutedEventArgs e)
         {
@@ -377,20 +278,6 @@ namespace qubic_miner_helper
             Properties.Settings.Default.Save();
         }
 
-        private void SetTresholdClick(object sender, RoutedEventArgs e)
-        {
-            //Properties.Settings.Default.Threshold = Convert.ToDouble(ErrorThreshold.Text);
-            Properties.Settings.Default.Save();
-            MessageBox.Show("Threshold saved","Success",MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void StopAllButFastestClick(object sender, RoutedEventArgs e)
-        {
-            if (isRunning)
-            {
-                StopAllThreadsExceptFastest();
-            }
-        }
 
         private void SetMinerIDClick(object sender, RoutedEventArgs e)
         {
