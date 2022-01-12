@@ -146,6 +146,7 @@ namespace qubic_miner_helper
                 var mySlider = propertySliderStackPanel.Children[ThreadIndex - 1] as ThreadDetailsControl;
                 mySlider.StopThread();
                 mySlider.ThreadUpdated -= TmpSliderControl_ThreadUpdated;
+                mySlider.ErrorsReduced -= TmpSliderControl_ErrorsReduced;
                 propertySliderStackPanel.Children.Remove(mySlider);
                 _threadDetailsControlsList.Remove(ThreadIndex);
 
@@ -209,6 +210,8 @@ namespace qubic_miner_helper
                     Console.WriteLine("Closing: " + i);
                     var mySlider = propertySliderStackPanel.Children[i-1] as ThreadDetailsControl;
                     mySlider.StopThread();
+                    mySlider.ThreadUpdated -= TmpSliderControl_ThreadUpdated;
+                    mySlider.ErrorsReduced -= TmpSliderControl_ErrorsReduced;
                     propertySliderStackPanel.Children.Remove(mySlider);
                     _threadDetailsControlsList.Remove(ThreadIndex);
 
@@ -237,6 +240,8 @@ namespace qubic_miner_helper
 
                     var mySlider = propertySliderStackPanel.Children[ThreadIndex - 1] as ThreadDetailsControl;
                     mySlider.StopThread();
+                    mySlider.ThreadUpdated -= TmpSliderControl_ThreadUpdated;
+                    mySlider.ErrorsReduced -= TmpSliderControl_ErrorsReduced;
                     propertySliderStackPanel.Children.Remove(mySlider);
                     _threadDetailsControlsList.Remove(ThreadIndex);
 
