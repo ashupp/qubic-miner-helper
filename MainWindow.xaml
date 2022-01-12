@@ -16,7 +16,7 @@
             <ColumnDefinition Width="9*"/>
         </Grid.ColumnDefinitions>
         <Button Content="Start / Stop All" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Width="90" Height="37" Click="Button_Click"/>
-        <Button Content="Set Miner Path" HorizontalAlignment="Left" Margin="758,63,0,0" VerticalAlignment="Top" Width="117" Click="SetMinerPathClick" Height="20"/>
+        <Button Content="Set Miner Path" HorizontalAlignment="Left" Margin="758,63,0,0" VerticalAlignment="Top" Width="130" Click="SetMinerPathClick" Height="20"/>
         <TextBox Name="minerPath" HorizontalAlignment="Left" Height="23" Margin="141,63,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="612" />
         <Border Margin="10,213,0,10" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1" Grid.ColumnSpan="2">
             <ScrollViewer x:Name="propertyScrollViewer" Height="auto" VerticalAlignment="Stretch" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Margin="0,0,9,0">
@@ -29,12 +29,14 @@
         <TextBox Name="ThreadCount" HorizontalAlignment="Left" Height="47" Margin="209,10,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="77" FontSize="36" TextAlignment="Center"/>
         <Label Content="Workers:" HorizontalAlignment="Left" Margin="151,22,0,0" VerticalAlignment="Top" Height="26" Width="65"/>
         <Label Content="Worker Information:" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top" Height="26" Width="125"/>
-        <CheckBox Name="CheckBoxAutostartOnOpen" Content="Worker Autostart on open" HorizontalAlignment="Left" Margin="333,10,0,0" VerticalAlignment="Top" Checked="CheckBoxAutostartOnOpen_OnChecked" Unchecked="CheckBoxAutostartOnOpen_OnUnchecked" Height="20" Width="178"/>
-        <Button Content="Set Command Line" HorizontalAlignment="Left" Margin="758,93,0,0" VerticalAlignment="Top" Width="117" Click="SetMinerIDClick" Height="20"/>
+        <CheckBox Name="CheckBoxAutostartOnOpen" Content="Worker Autostart on open" HorizontalAlignment="Left" Margin="328,11,0,0" VerticalAlignment="Top" Checked="CheckBoxAutostartOnOpen_OnChecked" Unchecked="CheckBoxAutostartOnOpen_OnUnchecked" Height="20" Width="178"/>
+        <Button Content="Save Command Line" HorizontalAlignment="Left" Margin="758,93,0,0" VerticalAlignment="Top" Width="130" Click="SetMinerIDClick" Height="20"/>
         <TextBox x:Name="minerID" HorizontalAlignment="Left" Height="23" Margin="141,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="612" />
         <Label Content="Command line:" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.105,0.154" Width="90" Height="26"/>
         <Label Content="Miner Path:" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.105,0.154" Width="90" Height="26"/>
         <Label Content="Overall Iterations/s: " HorizontalAlignment="Left" Margin="10,178,0,0" VerticalAlignment="Top" Width="125" Height="26"/>
         <TextBox HorizontalAlignment="Left" IsEnabled="False" Name="IterationsOverallBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="145" Margin="141,181,0,0"/>
+        <CheckBox x:Name="CheckBoxAutoRestartOnInactivity" Content="Auto restart on worker inactivity (60sec default)" HorizontalAlignment="Left" Margin="511,10,0,0" VerticalAlignment="Top" Checked="CheckBoxAutoRestartOnInactivity_OnChecked" Unchecked="CheckBoxAutoRestartOnInactivity_OnUnchecked" Height="20" Width="340" RenderTransformOrigin="0.5,0.5"></CheckBox>
+        <CheckBox x:Name="CheckBoxAutoRestartOnCrash" Content="Auto restart on worker crash / close" HorizontalAlignment="Left" Margin="511,36,0,0" VerticalAlignment="Top" Checked="CheckBoxAutoRestartOnCrash_OnChecked" Unchecked="CheckBoxAutoRestartOnCrash_OnUnChecked" Height="20" Width="348"/>
     </Grid>
 </Window>

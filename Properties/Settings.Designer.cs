@@ -61,7 +61,7 @@ namespace qubic_miner_helper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("INSERTYOURIDHERE THREADCOUNTHERE")]
+        [global::System.Configuration.DefaultSettingValueAttribute("INSERTYOURIDHERE THREADCOUNTHERE UPDATEINTERVALHERE")]
         public string MinerID {
             get {
                 return ((string)(this["MinerID"]));
@@ -73,13 +73,37 @@ namespace qubic_miner_helper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("90")]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
         public int WaitForResponseBeforeWorkerRestartSeconds {
             get {
                 return ((int)(this["WaitForResponseBeforeWorkerRestartSeconds"]));
             }
             set {
                 this["WaitForResponseBeforeWorkerRestartSeconds"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoRestartInactive {
+            get {
+                return ((bool)(this["AutoRestartInactive"]));
+            }
+            set {
+                this["AutoRestartInactive"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoRestartCrashed {
+            get {
+                return ((bool)(this["AutoRestartCrashed"]));
+            }
+            set {
+                this["AutoRestartCrashed"] = value;
             }
         }
     }

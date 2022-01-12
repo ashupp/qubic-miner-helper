@@ -35,6 +35,8 @@ namespace qubic_miner_helper
             this.ThreadCount.Text = Properties.Settings.Default.ThreadCount.ToString();
 
             this.CheckBoxAutostartOnOpen.IsChecked = Properties.Settings.Default.AutoStart;
+            this.CheckBoxAutoRestartOnInactivity.IsChecked = Properties.Settings.Default.AutoRestartInactive;
+            this.CheckBoxAutoRestartOnCrash.IsChecked = Properties.Settings.Default.AutoRestartCrashed;
 
             _threadDetailsControlsList = new Dictionary<int, ThreadDetailsControl>();
             propertySliderStackPanel.Children.Clear();
@@ -282,6 +284,30 @@ namespace qubic_miner_helper
         private void SetMinerIDClick(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.MinerID = minerID.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void CheckBoxAutoRestartOnInactivity_OnChecked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.AutoRestartInactive = (bool)this.CheckBoxAutoRestartOnInactivity.IsChecked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void CheckBoxAutoRestartOnInactivity_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.AutoRestartInactive = (bool)this.CheckBoxAutoRestartOnInactivity.IsChecked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void CheckBoxAutoRestartOnCrash_OnChecked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.AutoRestartCrashed = (bool)this.CheckBoxAutoRestartOnCrash.IsChecked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void CheckBoxAutoRestartOnCrash_OnUnChecked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.AutoRestartCrashed = (bool)this.CheckBoxAutoRestartOnCrash.IsChecked;
             Properties.Settings.Default.Save();
         }
     }

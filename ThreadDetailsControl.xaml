@@ -23,13 +23,13 @@
             </TextBox.RenderTransform>
         </TextBox>
         <Label Content="Errors left:" HorizontalAlignment="Left" Margin="642,41,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="67"/>
-        <TextBox IsEnabled="False" Name="SolutionsBox" HorizontalAlignment="Left" Height="23" Margin="59,100,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="446"/>
-        <TextBox IsEnabled="False" Name="RankBox" HorizontalAlignment="Left" Height="23" Margin="59,41,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="446"/>
-        <TextBox IsEnabled="False" Name="IterationBox" HorizontalAlignment="Left" Height="23" Margin="59,69,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="446"/>
+        <TextBox IsEnabled="False" Name="SolutionsBox" HorizontalAlignment="Left" Height="23" Margin="59,100,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="512"/>
+        <TextBox IsEnabled="False" Name="RankBox" HorizontalAlignment="Left" Height="23" Margin="59,41,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="512"/>
+        <TextBox IsEnabled="False" Name="IterationBox" HorizontalAlignment="Left" Height="23" Margin="59,69,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="512"/>
         <Label Content="Updated at:" HorizontalAlignment="Left" Margin="634,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="72"/>
         <TextBox IsEnabled="False" x:Name="LastUpdateBox" HorizontalAlignment="Left" Height="23" Margin="711,100,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="167"/>
         <Label Content="pErr/h:" HorizontalAlignment="Left" Margin="0,128,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588"/>
-        <TextBox IsEnabled="False" x:Name="PoolSolsBox" HorizontalAlignment="Left" Height="23" Margin="59,131,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="446"/>
+        <TextBox IsEnabled="False" x:Name="PoolSolsBox" HorizontalAlignment="Left" Height="23" Margin="59,131,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="512"/>
         <TextBox IsEnabled="False" x:Name="StartedBox" HorizontalAlignment="Left" Height="23" Margin="711,72,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="167"/>
         <Label Content="Thread restarted x times:" HorizontalAlignment="Left" Margin="569,181,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="140"/>
         <TextBox IsEnabled="False" x:Name="RestartCountBox" HorizontalAlignment="Left" Height="23" Margin="711,184,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="167"/>

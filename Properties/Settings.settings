@@ -12,10 +12,16 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="MinerID" Type="System.String" Scope="User">
-      <Value Profile="(Default)">INSERTYOURIDHERE THREADCOUNTHERE</Value>
+      <Value Profile="(Default)">INSERTYOURIDHERE THREADCOUNTHERE UPDATEINTERVALHERE</Value>
     </Setting>
     <Setting Name="WaitForResponseBeforeWorkerRestartSeconds" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">90</Value>
+      <Value Profile="(Default)">60</Value>
+    </Setting>
+    <Setting Name="AutoRestartInactive" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="AutoRestartCrashed" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

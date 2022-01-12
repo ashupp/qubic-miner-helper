@@ -107,6 +107,7 @@ namespace qubic_miner_helper
             currentMinerProcess.OutputDataReceived += CurrentMinerProcess_OutputDataReceived;
             currentMinerProcess.ErrorDataReceived += CurrentMinerProcess_ErrorDataReceived;
             currentMinerProcess.Exited += CurrentMinerProcess_Exited;
+            
             var started = currentMinerProcess.Start();
 
             Console.WriteLine("Starte loop");
@@ -157,14 +158,23 @@ namespace qubic_miner_helper
         {
             if (lastUpdateDateTime != null && lastUpdateDateTime < DateTime.Now.Subtract(waitUntilTimeout))
             {
-                Console.WriteLine("Miner Inactive....restarting");
-                Dispatcher.Invoke(() => RestartThread());
+                
+                if (Settings.Default.AutoRestartInactive)
+                {
+                    Console.WriteLine("Miner Inactive....restarting");
+                    Dispatcher.Invoke(() => RestartThread());
+                }
+                
             }
         }
 
         private void CurrentMinerProcess_Exited(object sender, EventArgs e)
         {
-            Console.WriteLine("Miner Process really exited");
+            Console.WriteLine("Miner Process exited... restarting");
+            if (Settings.Default.AutoRestartCrashed)
+            {
+                Dispatcher.Invoke(() => RestartThread());
+            }
         }
 
         private void CurrentMinerProcess_OutputDataReceived(object sender, DataReceivedEventArgs e)
@@ -232,10 +242,10 @@ namespace qubic_miner_helper
             
             try
             {
-                if (eData.Contains("Managed to find a solution reducing number of errors by"))
+                if (eData.Contains("Found a solution reducing"))
                 {
 
-                    var tmpPartA = eData.Split(new string[] { "Managed to find a solution reducing number of errors by " }, StringSplitOptions.None)[1].Split(new string[] { " (" }, StringSplitOptions.None)[0];
+                    var tmpPartA = eData.Split(new string[] { "Found a solution reducing number of errors by " }, StringSplitOptions.None)[1].Split(new string[] { " (" }, StringSplitOptions.None)[0];
                     //threadErrorReductions+= Convert.ToDouble(tmpPartA);
                     
                     Dispatcher.Invoke(() =>
@@ -261,10 +271,10 @@ namespace qubic_miner_helper
             // Iterations
             try
             {
-                if (eData.Contains("Your iteration rate on this hardware is"))
+                if (eData.Contains("Your iteration rate is"))
                 {
 
-                    var tmpPartA = eData.Split(new string[] { "Your iteration rate on this hardware is " }, StringSplitOptions.None)[1].Split(new string[] { " iterations/s" }, StringSplitOptions.None)[0];
+                    var tmpPartA = eData.Split(new string[] { "Your iteration rate is " }, StringSplitOptions.None)[1].Split(new string[] { " iterations/s" }, StringSplitOptions.None)[0];
                     Iterations = Double.Parse(tmpPartA, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
                     Dispatcher.Invoke(() =>
                     {
@@ -283,7 +293,7 @@ namespace qubic_miner_helper
             // SolutionRate self
             try
             {
-                if (eData.Contains("Your error elimination rate on this hardware is"))
+                if (eData.Contains("Your error elimination rate is"))
                 {
                     Dispatcher.Invoke(() =>
                     {
@@ -302,7 +312,7 @@ namespace qubic_miner_helper
             // SolutionRate pool
             try
             {
-                if (eData.Contains("Pool error elimination rate is"))
+                if (eData.Contains("Remaining pool error elimination rate is"))
                 {
                     Dispatcher.Invoke(() =>
                     {
@@ -328,7 +338,7 @@ namespace qubic_miner_helper
                     Dispatcher.Invoke(() =>
                     {
                         ErrorsBox.Text = errBoxTextTmp;
-                        Errors = Double.Parse(errBoxTextTmp, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
+                        Errors = Double.Parse(errBoxTextTmp.Replace("'",""), NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture);
                     });
                 }
 
@@ -434,6 +444,8 @@ namespace qubic_miner_helper
         {
             activeTimer.Stop();
             activeTimer.Elapsed -= ActiveTimer_Elapsed;
+            // Dont start again if closed on demand!
+            currentMinerProcess.Exited -= CurrentMinerProcess_Exited;
 
             thread1.Abort();
             Console.WriteLine("Stopping Thread");
