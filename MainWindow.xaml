@@ -38,5 +38,8 @@
         <TextBox HorizontalAlignment="Left" IsEnabled="False" Name="IterationsOverallBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="145" Margin="141,181,0,0"/>
         <CheckBox x:Name="CheckBoxAutoRestartOnInactivity" Content="Auto restart on worker inactivity (60sec default)" HorizontalAlignment="Left" Margin="511,10,0,0" VerticalAlignment="Top" Checked="CheckBoxAutoRestartOnInactivity_OnChecked" Unchecked="CheckBoxAutoRestartOnInactivity_OnUnchecked" Height="20" Width="340" RenderTransformOrigin="0.5,0.5"></CheckBox>
         <CheckBox x:Name="CheckBoxAutoRestartOnCrash" Content="Auto restart on worker crash / close" HorizontalAlignment="Left" Margin="511,36,0,0" VerticalAlignment="Top" Checked="CheckBoxAutoRestartOnCrash_OnChecked" Unchecked="CheckBoxAutoRestartOnCrash_OnUnChecked" Height="20" Width="348"/>
+        <Label Content="Overall Errors found in Session: " HorizontalAlignment="Left" Margin="302,178,0,0" VerticalAlignment="Top" Width="180" Height="26"/>
+        <TextBox HorizontalAlignment="Left" IsEnabled="False" x:Name="ErrorsReducedOverallBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="176" Margin="476,181,0,0"/>
+        <Label Content="(May be horribly wrong if sending fails etc.)" HorizontalAlignment="Left" Margin="657,178,0,0" VerticalAlignment="Top" Width="251" Height="26"/>
     </Grid>
 </Window>

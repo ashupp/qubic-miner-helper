@@ -200,6 +200,15 @@ namespace qubic_miner_helper
             Console.WriteLine("Error Data received: " + e.Data);
         }
 
+        protected virtual void OnErrorsReduced(ErrorsReducedEventArgs e)
+        {
+            ErrorsReducedEventHandler handler = ErrorsReduced;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
 
         private void setData(string eData)
         {
@@ -252,6 +261,16 @@ namespace qubic_miner_helper
                     {
                         LastErrorReductionTimeBox.Text = DateTime.Now.ToString();
                         LastErrorReductionCountBox.Text = tmpPartA;
+
+                        try
+                        {
+                            OnErrorsReduced(new ErrorsReducedEventArgs() { ErrorCount = float.Parse(tmpPartA.Replace("'", "")) });
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Error during firing event of reduced errors." + e.Message);
+                        }
+                        
                     });
                 }
 
@@ -415,6 +434,8 @@ namespace qubic_miner_helper
         public event EventHandler<KeyValueEventArgs> DefaultValueClicked;
 
         public event EventHandler ThreadUpdated;
+
+        public event ErrorsReducedEventHandler ErrorsReduced;
         #endregion
 
         #region Eventhandlers
@@ -477,4 +498,12 @@ namespace qubic_miner_helper
             RestartThread();
         }
     }
+
+    public class ErrorsReducedEventArgs : EventArgs
+    {
+        public float ErrorCount { get; set; }
+    }
+
+    public delegate void ErrorsReducedEventHandler(Object sender, ErrorsReducedEventArgs e);
+
 }

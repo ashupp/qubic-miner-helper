@@ -18,6 +18,7 @@ namespace qubic_miner_helper
         private int fastestThread = -1;
         public MainWindow mainWindowRef;
         private Timer collectDataTimer;
+        private float ErrorsReduced = 0;
 
 
         public MainWindow()
@@ -89,6 +90,7 @@ namespace qubic_miner_helper
                 IsEnabled = true,
                 ThreadIndex = ThreadIndex
             };
+            tmpSliderControl.ErrorsReduced += TmpSliderControl_ErrorsReduced;
             tmpSliderControl.Background = new SolidColorBrush(Colors.LightGray);
             tmpSliderControl.ThreadUpdated += TmpSliderControl_ThreadUpdated;
 
@@ -99,6 +101,12 @@ namespace qubic_miner_helper
             _threadDetailsControlsList.Add(ThreadIndex, tmpSliderControl);
 
             isRunning = true;
+        }
+
+        private void TmpSliderControl_ErrorsReduced(object sender, ErrorsReducedEventArgs e)
+        {
+            ErrorsReduced += e.ErrorCount;
+            ErrorsReducedOverallBox.Text = ErrorsReduced.ToString();
         }
 
         private void CollectDataTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
