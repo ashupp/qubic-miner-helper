@@ -5,14 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:qubic_miner_helper"
              mc:Ignorable="d" 
-             Height="272.275" Width="898.434" Margin="0 0 0 3">
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="888" Margin="0,0,0,10">
+             Height="272.275" Width="1113.101" Margin="0 0 0 3">
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="1103" Margin="0,0,0,10">
         <Label x:Name="labelName" Content="{Binding PName}" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="28" Width="93" FontWeight="Bold"/>
         <Label Content="Iter/s:" HorizontalAlignment="Left" Margin="9,69,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588"/>
         <Label Content="Rank:" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588"/>
         <Label Content="Err/h:" HorizontalAlignment="Left" Margin="9,97,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588"/>
-        <Label Content="Started at:" HorizontalAlignment="Left" Margin="642,71,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="64"/>
-        <TextBox IsEnabled="False" Name="ErrorsBox" HorizontalAlignment="Left" Height="23" Margin="712,43,0,0" TextWrapping="Wrap" Text="Waiting for round..." VerticalAlignment="Top" Width="168" RenderTransformOrigin="0.5,0.5">
+        <Label Content="Started at:" HorizontalAlignment="Left" Margin="857,73,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="64"/>
+        <TextBox IsEnabled="False" Name="ErrorsBox" HorizontalAlignment="Left" Height="23" Margin="927,45,0,0" TextWrapping="Wrap" Text="Waiting for round..." VerticalAlignment="Top" Width="168" RenderTransformOrigin="0.5,0.5">
             <TextBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -22,22 +22,22 @@
                 </TransformGroup>
             </TextBox.RenderTransform>
         </TextBox>
-        <Label Content="Errors left:" HorizontalAlignment="Left" Margin="642,41,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="67"/>
-        <TextBox IsEnabled="False" Name="SolutionsBox" HorizontalAlignment="Left" Height="23" Margin="59,100,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="512"/>
-        <TextBox IsEnabled="False" Name="RankBox" HorizontalAlignment="Left" Height="23" Margin="59,41,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="512"/>
-        <TextBox IsEnabled="False" Name="IterationBox" HorizontalAlignment="Left" Height="23" Margin="59,69,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="512"/>
-        <Label Content="Updated at:" HorizontalAlignment="Left" Margin="634,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="72"/>
-        <TextBox IsEnabled="False" x:Name="LastUpdateBox" HorizontalAlignment="Left" Height="23" Margin="711,100,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="167"/>
+        <Label Content="Errors left:" HorizontalAlignment="Left" Margin="857,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="67"/>
+        <TextBox IsEnabled="False" Name="SolutionsBox" HorizontalAlignment="Left" Height="23" Margin="59,100,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="656"/>
+        <TextBox IsEnabled="False" Name="RankBox" HorizontalAlignment="Left" Height="23" Margin="59,41,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="656"/>
+        <TextBox IsEnabled="False" Name="IterationBox" HorizontalAlignment="Left" Height="23" Margin="59,69,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="656"/>
+        <Label Content="Updated at:" HorizontalAlignment="Left" Margin="849,100,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="72"/>
+        <TextBox IsEnabled="False" x:Name="LastUpdateBox" HorizontalAlignment="Left" Height="23" Margin="926,102,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="167"/>
         <Label Content="pErr/h:" HorizontalAlignment="Left" Margin="0,128,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588"/>
-        <TextBox IsEnabled="False" x:Name="PoolSolsBox" HorizontalAlignment="Left" Height="23" Margin="59,131,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="512"/>
-        <TextBox IsEnabled="False" x:Name="StartedBox" HorizontalAlignment="Left" Height="23" Margin="711,72,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="167"/>
-        <Label Content="Thread restarted x times:" HorizontalAlignment="Left" Margin="569,181,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="140"/>
-        <TextBox IsEnabled="False" x:Name="RestartCountBox" HorizontalAlignment="Left" Height="23" Margin="711,184,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="167"/>
-        <Label Content="Thread last errors reduction count:" HorizontalAlignment="Left" Margin="517,154,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="192"/>
-        <TextBox IsEnabled="False" x:Name="LastErrorReductionCountBox" HorizontalAlignment="Left" Height="23" Margin="711,156,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="167"/>
-        <Label Content="Last Error reduction at:" HorizontalAlignment="Left" Margin="576,126,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="130"/>
-        <TextBox IsEnabled="False" x:Name="LastErrorReductionTimeBox" HorizontalAlignment="Left" Height="23" Margin="711,128,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="167"/>
-        <Label x:Name="labelThreadsNumber" Content="" HorizontalAlignment="Left" Margin="108,5,0,0" VerticalAlignment="Top" Height="28" Width="770" FontWeight="Bold"/>
-        <Button Content="Force worker restart" HorizontalAlignment="Left" Margin="711,219,0,0" VerticalAlignment="Top" Width="167" Height="25" Click="ButtonBase_OnClick"/>
+        <TextBox IsEnabled="False" x:Name="PoolSolsBox" HorizontalAlignment="Left" Height="23" Margin="59,131,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="656"/>
+        <TextBox IsEnabled="False" x:Name="StartedBox" HorizontalAlignment="Left" Height="23" Margin="926,74,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="167"/>
+        <Label Content="Worker restarted x times:" HorizontalAlignment="Left" Margin="784,183,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="140"/>
+        <TextBox IsEnabled="False" x:Name="RestartCountBox" HorizontalAlignment="Left" Height="23" Margin="926,186,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="167"/>
+        <Label Content="Worker last errors reduction count:" HorizontalAlignment="Left" Margin="727,156,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="197"/>
+        <TextBox IsEnabled="False" x:Name="LastErrorReductionCountBox" HorizontalAlignment="Left" Height="23" Margin="926,158,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="167"/>
+        <Label Content="Worker last error reduction at:" HorizontalAlignment="Left" Margin="753,128,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="168"/>
+        <TextBox IsEnabled="False" x:Name="LastErrorReductionTimeBox" HorizontalAlignment="Left" Height="23" Margin="926,130,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="167"/>
+        <Label x:Name="labelThreadsNumber" Content="" HorizontalAlignment="Left" Margin="173,5,0,0" VerticalAlignment="Top" Height="28" Width="348" FontWeight="Bold"/>
+        <Button Content="Force worker restart" HorizontalAlignment="Left" Margin="926,221,0,0" VerticalAlignment="Top" Width="167" Height="25" Click="ButtonBase_OnClick"/>
     </Grid>
 </UserControl>

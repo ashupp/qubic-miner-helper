@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.Win32;
 using Timer = System.Timers.Timer;
@@ -321,6 +324,27 @@ namespace qubic_miner_helper
         private void CheckBoxAutoRestartOnCrash_OnUnChecked(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.AutoRestartCrashed = (bool)this.CheckBoxAutoRestartOnCrash.IsChecked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void ViewTop10Click(object sender, RoutedEventArgs e)
+        {
+            if (Properties.Settings.Default.MinerPath != "" && File.Exists(Properties.Settings.Default.MinerPath))
+            {
+                var top10Process = new ProcessStartInfo();
+                top10Process.FileName = Properties.Settings.Default.MinerPath;
+                top10Process.Arguments = "0 0 5";
+                top10Process.WorkingDirectory = System.IO.Path.GetDirectoryName(Properties.Settings.Default.MinerPath);
+                top10Process.UseShellExecute = true;
+                top10Process.CreateNoWindow = false;
+                top10Process.WindowStyle = ProcessWindowStyle.Normal;
+                _ = new Process() { StartInfo = top10Process }.Start();
+            }
+        }
+
+        private void onCommandLineTextChanged(object sender, TextChangedEventArgs e)
+        {
+            Properties.Settings.Default.MinerID = minerID.Text;
             Properties.Settings.Default.Save();
         }
     }
