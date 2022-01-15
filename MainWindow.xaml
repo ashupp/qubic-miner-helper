@@ -17,8 +17,8 @@
         </Grid.ColumnDefinitions>
         <Button Content="Start / Stop All" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Width="90" Height="37" Click="Button_Click"/>
         <Button Content="Set Miner Path" HorizontalAlignment="Left" Margin="1021,63,0,0" VerticalAlignment="Top" Width="130" Click="SetMinerPathClick" Height="23" RenderTransformOrigin="0.503,0.3"/>
-        <TextBox Name="minerPath" HorizontalAlignment="Left" Height="23" Margin="141,63,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="875" />
-        <Border Margin="10,213,0,10" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1" Grid.ColumnSpan="2">
+        <TextBox Name="minerPath" HorizontalAlignment="Left" Height="23" Margin="179,63,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="837" />
+        <Border Margin="10,368,0,10" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1" Grid.ColumnSpan="2">
             <ScrollViewer x:Name="propertyScrollViewer" Height="auto" VerticalAlignment="Stretch" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Margin="0,0,9,0">
                 <StackPanel x:Name="propertySliderStackPanel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
             </ScrollViewer>
@@ -28,19 +28,45 @@
         <Button Content="-" HorizontalAlignment="Left" Margin="293,40,0,0" VerticalAlignment="Top" Width="22" Height="18" RenderTransformOrigin="2.591,0.444" Click="RemoveThreadClick"/>
         <TextBox Name="ThreadCount" HorizontalAlignment="Left" Height="47" Margin="209,10,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="77" FontSize="36" TextAlignment="Center"/>
         <Label Content="Workers:" HorizontalAlignment="Left" Margin="151,22,0,0" VerticalAlignment="Top" Height="26" Width="65"/>
-        <Label Content="Worker Information:" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top" Height="26" Width="125"/>
         <CheckBox Name="CheckBoxAutostartOnOpen" Content="Worker Autostart on open" HorizontalAlignment="Left" Margin="328,11,0,0" VerticalAlignment="Top" Checked="CheckBoxAutostartOnOpen_OnChecked" Unchecked="CheckBoxAutostartOnOpen_OnUnchecked" Height="20" Width="178"/>
         <Button Content="Save Command Line" HorizontalAlignment="Left" Margin="1021,90,0,0" VerticalAlignment="Top" Width="130" Click="SetMinerIDClick" Height="24"/>
-        <TextBox x:Name="minerID" HorizontalAlignment="Left" Height="23" Margin="141,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="875" TextChanged="onCommandLineTextChanged" />
+        <TextBox x:Name="minerID" HorizontalAlignment="Left" Height="23" Margin="179,91,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="837" TextChanged="onCommandLineTextChanged" />
         <Label Content="Command line:" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.105,0.154" Width="90" Height="26"/>
         <Label Content="Miner Path:" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.105,0.154" Width="90" Height="26"/>
-        <Label Content="Overall Iterations/s: " HorizontalAlignment="Left" Margin="10,178,0,0" VerticalAlignment="Top" Width="125" Height="26"/>
-        <TextBox HorizontalAlignment="Left" IsEnabled="False" Name="IterationsOverallBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="145" Margin="141,181,0,0"/>
+
+
         <CheckBox x:Name="CheckBoxAutoRestartOnInactivity" Content="Auto restart on worker inactivity (60sec default)" HorizontalAlignment="Left" Margin="511,10,0,0" VerticalAlignment="Top" Checked="CheckBoxAutoRestartOnInactivity_OnChecked" Unchecked="CheckBoxAutoRestartOnInactivity_OnUnchecked" Height="20" Width="340" RenderTransformOrigin="0.5,0.5"></CheckBox>
-        <CheckBox x:Name="CheckBoxAutoRestartOnCrash" Content="Auto restart on worker crash / close" HorizontalAlignment="Left" Margin="511,36,0,0" VerticalAlignment="Top" Checked="CheckBoxAutoRestartOnCrash_OnChecked" Unchecked="CheckBoxAutoRestartOnCrash_OnUnChecked" Height="20" Width="348"/>
-        <Label Content="Overall Errors found in Session: " HorizontalAlignment="Left" Margin="302,178,0,0" VerticalAlignment="Top" Width="180" Height="26"/>
-        <TextBox HorizontalAlignment="Left" IsEnabled="False" x:Name="ErrorsReducedOverallBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="176" Margin="476,181,0,0"/>
-        <Label Content="(May be horribly wrong if sending fails etc.)" HorizontalAlignment="Left" Margin="657,178,0,0" VerticalAlignment="Top" Width="251" Height="26"/>
-        <Button Content="view Top10 -no mining" HorizontalAlignment="Left" Margin="1021,119,0,0" VerticalAlignment="Top" Width="130" Click="ViewTop10Click" Height="24"/>
+        <CheckBox x:Name="CheckBoxAutoRestartOnCrash" Content="Auto restart on worker crash / close" HorizontalAlignment="Left" Margin="511,38,0,0" VerticalAlignment="Top" Checked="CheckBoxAutoRestartOnCrash_OnChecked" Unchecked="CheckBoxAutoRestartOnCrash_OnUnChecked" Height="20" Width="348"/>
+        <Button Content="view Top10 -no mining" HorizontalAlignment="Left" Margin="1021,31,0,0" VerticalAlignment="Top" Width="130" Click="ViewTop10Click" Height="24"/>
+        <GroupBox Header="Overview (Dashboard) Server" HorizontalAlignment="Left" Height="184" Margin="10,121,0,0" VerticalAlignment="Top" Width="1141">
+            <Grid>
+                <CheckBox Content="Connect to Server and send worker / session data" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="349"/>
+                <TextBox x:Name="minerID_Copy" HorizontalAlignment="Left" Height="23" Margin="204,31,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="299" TextChanged="onCommandLineTextChanged" />
+                <Label Content="Dashboard IP/host:port :" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top"/>
+                <Label Content="Name this machine:" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="minerID_Copy1" HorizontalAlignment="Left" Height="23" Margin="204,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="299" TextChanged="onCommandLineTextChanged" />
+                <Label Content="Dashboard connection status:" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="minerID_Copy2" HorizontalAlignment="Left" Height="23" Margin="204,87,0,0" TextWrapping="Wrap" Text="not available" VerticalAlignment="Top" Width="299" TextChanged="onCommandLineTextChanged" />
+                <ListBox HorizontalAlignment="Left" Height="115" Margin="641,7,0,0" VerticalAlignment="Top" Width="478"/>
+                <Label Content="Debug:" HorizontalAlignment="Left" Margin="588,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.133,0.5"/>
+                <Button Content="Force reconnect" HorizontalAlignment="Left" Margin="989,127,0,0" VerticalAlignment="Top" Width="130" Click="SetMinerIDClick" Height="24"/>
+                <CheckBox Margin="204,115,908,26">
+                </CheckBox>
+                <Label Content="Transfer all worker log messages?" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top"/>
+                <Label Content="Use only if really needed." HorizontalAlignment="Left" Margin="226,110,0,0" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Worker information" HorizontalAlignment="Left" Height="53" Margin="10,310,0,0" VerticalAlignment="Top" Width="1141">
+            <Grid>
+                <Label Content="Overall Iterations/s: " HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="125" Height="26"/>
+                <TextBox HorizontalAlignment="Left" IsEnabled="False" Name="IterationsOverallBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="145" Margin="129,4,0,0"/>
+                <Label Content="Overall Errors found in Session: " HorizontalAlignment="Left" Margin="279,1,0,0" VerticalAlignment="Top" Width="180" Height="26"/>
+                <TextBox HorizontalAlignment="Left" IsEnabled="False" x:Name="ErrorsReducedOverallBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="176" Margin="464,4,0,0"/>
+                <Label Content="(May be wrong if sending fails etc.)" HorizontalAlignment="Left" Margin="645,1,0,0" VerticalAlignment="Top" Width="198" Height="26"/>
+            </Grid>
+        </GroupBox>
+        <CheckBox x:Name="CheckBoxAutostartOnWindowsStart" Content="Autostart on Windows start" HorizontalAlignment="Left" Margin="328,38,0,0" VerticalAlignment="Top" Checked="CheckBoxAutostartOnWindowsStart_OnChecked" Unchecked="CheckBoxAutostartOnWindowsStart_OnUnChecked" Height="20" Width="178"/>
+
+
     </Grid>
 </Window>

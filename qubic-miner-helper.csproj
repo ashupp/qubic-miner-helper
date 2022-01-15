@@ -94,6 +94,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Startup.cs" />
     <Compile Include="ThreadDetailsControl.xaml.cs">
       <DependentUpon>ThreadDetailsControl.xaml</DependentUpon>
     </Compile>

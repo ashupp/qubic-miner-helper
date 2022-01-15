@@ -42,12 +42,23 @@ namespace qubic_miner_helper
             this.CheckBoxAutoRestartOnInactivity.IsChecked = Properties.Settings.Default.AutoRestartInactive;
             this.CheckBoxAutoRestartOnCrash.IsChecked = Properties.Settings.Default.AutoRestartCrashed;
 
+            if (Startup.IsInStartup("qubic-miner-helper", System.Reflection.Assembly.GetExecutingAssembly().Location))
+            {
+                this.CheckBoxAutostartOnWindowsStart.IsChecked = true;
+                Properties.Settings.Default.AutoStartOnWindowsStart = true;
+                Properties.Settings.Default.Save();
+            }
+
+
             _threadDetailsControlsList = new Dictionary<int, ThreadDetailsControl>();
             propertySliderStackPanel.Children.Clear();
 
             if (Properties.Settings.Default.AutoStart)
             {
-                StartAllThreads();
+                if (Properties.Settings.Default.MinerPath != String.Empty && File.Exists(Properties.Settings.Default.MinerPath))
+                {
+                    StartAllThreads();
+                }
             }
         }
 
@@ -66,8 +77,10 @@ namespace qubic_miner_helper
 
         private void AddThreadClick(object sender, RoutedEventArgs e)
         {
-            AddThread();
-
+            if (Properties.Settings.Default.MinerPath != String.Empty && File.Exists(Properties.Settings.Default.MinerPath))
+            {
+                AddThread();
+            }
         }
 
         private void AddThread()
@@ -346,6 +359,20 @@ namespace qubic_miner_helper
         {
             Properties.Settings.Default.MinerID = minerID.Text;
             Properties.Settings.Default.Save();
+        }
+
+        private void CheckBoxAutostartOnWindowsStart_OnUnChecked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.AutoStartOnWindowsStart = (bool)this.CheckBoxAutostartOnWindowsStart.IsChecked;
+            Properties.Settings.Default.Save();
+            Startup.RunOnStartup("qubic-miner-helper", System.Reflection.Assembly.GetExecutingAssembly().Location);
+        }
+
+        private void CheckBoxAutostartOnWindowsStart_OnChecked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.AutoStartOnWindowsStart = (bool)this.CheckBoxAutostartOnWindowsStart.IsChecked;
+            Properties.Settings.Default.Save();
+            Startup.RemoveFromStartup("qubic-miner-helper");
         }
     }
 }

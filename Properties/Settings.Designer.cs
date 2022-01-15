@@ -106,5 +106,17 @@ namespace qubic_miner_helper.Properties {
                 this["AutoRestartCrashed"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoStartOnWindowsStart {
+            get {
+                return ((bool)(this["AutoStartOnWindowsStart"]));
+            }
+            set {
+                this["AutoStartOnWindowsStart"] = value;
+            }
+        }
     }
 }
