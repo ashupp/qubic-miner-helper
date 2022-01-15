@@ -49,6 +49,20 @@ namespace qubic_miner_helper
                 Properties.Settings.Default.Save();
             }
 
+            if (Properties.Settings.Default.MachineName == String.Empty)
+            {
+                try
+                {
+                    MachineNameTextBox.Text = Environment.MachineName;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error during loading of MachineName: " + e.Message);
+                }
+                
+            } 
+
+
 
             _threadDetailsControlsList = new Dictionary<int, ThreadDetailsControl>();
             propertySliderStackPanel.Children.Clear();
@@ -373,6 +387,24 @@ namespace qubic_miner_helper
             Properties.Settings.Default.AutoStartOnWindowsStart = (bool)this.CheckBoxAutostartOnWindowsStart.IsChecked;
             Properties.Settings.Default.Save();
             Startup.RemoveFromStartup("qubic-miner-helper");
+        }
+
+        private void onMachineNameTextChanged(object sender, TextChangedEventArgs e)
+        {
+            Properties.Settings.Default.MachineName = MachineNameTextBox.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void CheckBoxConnectToServer_OnChecked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.ConnectToServer = (bool)this.CheckBoxConnectToServer.IsChecked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void CheckBoxConnectToServer_OnUnChecked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.ConnectToServer = (bool)this.CheckBoxConnectToServer.IsChecked;
+            Properties.Settings.Default.Save();
         }
     }
 }

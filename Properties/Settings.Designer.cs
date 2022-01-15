@@ -118,5 +118,29 @@ namespace qubic_miner_helper.Properties {
                 this["AutoStartOnWindowsStart"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MachineName {
+            get {
+                return ((string)(this["MachineName"]));
+            }
+            set {
+                this["MachineName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ConnectToServer {
+            get {
+                return ((bool)(this["ConnectToServer"]));
+            }
+            set {
+                this["ConnectToServer"] = value;
+            }
+        }
     }
 }

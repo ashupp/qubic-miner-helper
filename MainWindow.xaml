@@ -40,9 +40,9 @@
         <Button Content="view Top10 -no mining" HorizontalAlignment="Left" Margin="1021,31,0,0" VerticalAlignment="Top" Width="130" Click="ViewTop10Click" Height="24"/>
         <GroupBox Header="Overview (Dashboard) Server" HorizontalAlignment="Left" Height="184" Margin="10,121,0,0" VerticalAlignment="Top" Width="1141">
             <Grid>
-                <CheckBox Content="Connect to Server and send worker / session data" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="349"/>
-                <TextBox x:Name="minerID_Copy" HorizontalAlignment="Left" Height="23" Margin="204,31,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="299" TextChanged="onCommandLineTextChanged" />
-                <Label Content="Dashboard IP/host:port :" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="CheckBoxConnectToServer" Content="Connect to Server and send worker / session data" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="349" Checked="CheckBoxConnectToServer_OnChecked" Unchecked="CheckBoxConnectToServer_OnUnChecked"/>
+                <TextBox x:Name="MachineNameTextBox" HorizontalAlignment="Left" Height="23" Margin="204,31,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="299" TextChanged="onMachineNameTextChanged" />
+                <Label Content="Dashboard IP/host:port:" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top"/>
                 <Label Content="Name this machine:" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="minerID_Copy1" HorizontalAlignment="Left" Height="23" Margin="204,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="299" TextChanged="onCommandLineTextChanged" />
                 <Label Content="Dashboard connection status:" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top"/>
