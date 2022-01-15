@@ -1,7 +1,7 @@
 # qubic-miner-helper
 
 ### Helps to easy run multiple Qiner worker instances with same command line params.
-#### Its now compatible with Qiner 0.4.1 and has auto restart on detected inactivity and on crashes / worker process close. 
+#### Its now compatible with Qiner 0.4.3 and has auto restart on detected inactivity and on crashes / worker process close. 
 
 - **Set your miner and Insert your ID, desired thread count and seconds until update into command line box.** 
 - **Then click on save command line**
