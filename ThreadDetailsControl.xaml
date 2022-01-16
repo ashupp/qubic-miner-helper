@@ -12,16 +12,7 @@
         <Label Content="Rank:" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588"/>
         <Label Content="Err/h:" HorizontalAlignment="Left" Margin="9,97,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588"/>
         <Label Content="Started at:" HorizontalAlignment="Left" Margin="857,73,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="64"/>
-        <TextBox IsEnabled="False" Name="ErrorsBox" HorizontalAlignment="Left" Height="23" Margin="927,45,0,0" TextWrapping="Wrap" Text="Waiting for round..." VerticalAlignment="Top" Width="168" RenderTransformOrigin="0.5,0.5">
-            <TextBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="-0.22"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="-0.33"/>
-                </TransformGroup>
-            </TextBox.RenderTransform>
-        </TextBox>
+        <TextBox IsEnabled="False" Name="ErrorsBox" HorizontalAlignment="Left" Height="23" Margin="927,45,0,0" TextWrapping="Wrap" Text="Waiting for round..." VerticalAlignment="Top" Width="168" RenderTransformOrigin="0.5,0.5" />
         <Label Content="Errors left:" HorizontalAlignment="Left" Margin="857,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.103,-0.588" Width="67"/>
         <TextBox IsEnabled="False" Name="SolutionsBox" HorizontalAlignment="Left" Height="23" Margin="59,100,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="656"/>
         <TextBox IsEnabled="False" Name="RankBox" HorizontalAlignment="Left" Height="23" Margin="59,41,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="656"/>

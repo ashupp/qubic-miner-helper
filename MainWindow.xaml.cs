@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -591,13 +592,30 @@ namespace qubic_miner_helper
             machineState.overallCurrentIterationsPerSecond = IterationsOverall;
             machineState.overallSessionErrorsFound = ErrorsReduced;
             machineState.currentMinerVersion = currentQinerVersion;
+            machineState.currentHelperVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             machineState.overallThreadCount = 0;
+            machineState.currentWorkerStates = new List<WorkerState>();
+
+            foreach (var threadDetails in _threadDetailsControlsList)
+            {
+                try
+                {
+                    var workerState = new WorkerState();
+                    workerState.errorsLeftText = threadDetails.Value.ErrorsBox.Text;
+                    workerState.rankText = threadDetails.Value.RankBox.Text;
+                    machineState.currentWorkerStates.Add(workerState);
+                }
+                catch (Exception e)
+                {
+                   Console.WriteLine("could not set workerState data: " + e.Message);
+                }
+          
+            }
+
 
             if (Client.IsConnected)
             {
-                Console.WriteLine("Sending data...");
                 Client.Send(JsonConvert.SerializeObject(machineState) + Environment.NewLine);
-                Console.WriteLine("Data sent!");
             }
             else
             {
