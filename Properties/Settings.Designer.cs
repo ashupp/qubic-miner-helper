@@ -142,5 +142,41 @@ namespace qubic_miner_helper.Properties {
                 this["ConnectToServer"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ServerAddress {
+            get {
+                return ((string)(this["ServerAddress"]));
+            }
+            set {
+                this["ServerAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ServerTransferAllMessages {
+            get {
+                return ((bool)(this["ServerTransferAllMessages"]));
+            }
+            set {
+                this["ServerTransferAllMessages"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double ServerTransferEverySeconds {
+            get {
+                return ((double)(this["ServerTransferEverySeconds"]));
+            }
+            set {
+                this["ServerTransferEverySeconds"] = value;
+            }
+        }
     }
 }
