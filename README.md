@@ -9,7 +9,11 @@ Helper Server project: https://github.com/ashupp/qubic-miner-helper-server
 **Set your miner executable and Insert your ID, desired thread count and seconds until update into command line box.**   
 **Then click on save command line**
 
-## New version 1.1.0.0
+## Version 1.1.1.0
+- Extended data is being sent to server. 
+- Current rank, current pool errors left, current helper version
+
+## Version 1.1.0.0
 - You can now connect to the helper server if you have multiple mining machines to see all stats of your miners at once
 - Get Helper Server here: https://github.com/ashupp/qubic-miner-helper-server 
 
