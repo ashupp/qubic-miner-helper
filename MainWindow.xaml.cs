@@ -6,6 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.Win32;
+using Newtonsoft.Json;
+using SimpleTcp;
 using Timer = System.Timers.Timer;
 
 namespace qubic_miner_helper
@@ -22,6 +24,12 @@ namespace qubic_miner_helper
         public MainWindow mainWindowRef;
         private Timer collectDataTimer;
         private float ErrorsReduced = 0;
+        private float IterationsOverall = 0;
+        private bool ServerActive = false;
+        private SimpleTcpClient Client;
+        private DateTime ServerConnectionLastTry = DateTime.Now;
+        private DateTime ServerConnectionLastSentData = DateTime.Now;
+        private string currentQinerVersion = String.Empty;
 
 
         public MainWindow()
@@ -34,6 +42,7 @@ namespace qubic_miner_helper
 
         private void InitApp()
         {
+            #region Initialize miner config
             this.minerPath.Text = Properties.Settings.Default.MinerPath;
             this.minerID.Text = Properties.Settings.Default.MinerID;
             this.ThreadCount.Text = Properties.Settings.Default.ThreadCount.ToString();
@@ -42,12 +51,22 @@ namespace qubic_miner_helper
             this.CheckBoxAutoRestartOnInactivity.IsChecked = Properties.Settings.Default.AutoRestartInactive;
             this.CheckBoxAutoRestartOnCrash.IsChecked = Properties.Settings.Default.AutoRestartCrashed;
 
-            if (Startup.IsInStartup("qubic-miner-helper", System.Reflection.Assembly.GetExecutingAssembly().Location))
+            if (!Debugger.IsAttached)
             {
-                this.CheckBoxAutostartOnWindowsStart.IsChecked = true;
-                Properties.Settings.Default.AutoStartOnWindowsStart = true;
-                Properties.Settings.Default.Save();
+                if (Startup.IsInStartup("qubic-miner-helper", System.Reflection.Assembly.GetExecutingAssembly().Location))
+                {
+                    //this.CheckBoxAutostartOnWindowsStart.IsChecked = true;
+                    Properties.Settings.Default.AutoStartOnWindowsStart = true;
+                    Properties.Settings.Default.Save();
+                }
             }
+            #endregion
+
+
+            #region Initialize server config
+            this.CheckBoxConnectToServer.IsChecked = Properties.Settings.Default.ConnectToServer;
+            //this.CheckBoxTransferAllMessages.IsChecked = Properties.Settings.Default.ServerTransferAllMessages;
+            this.serverAddressTextBox.Text = Properties.Settings.Default.ServerAddress;
 
             if (Properties.Settings.Default.MachineName == String.Empty)
             {
@@ -59,8 +78,14 @@ namespace qubic_miner_helper
                 {
                     Console.WriteLine("Error during loading of MachineName: " + e.Message);
                 }
-                
-            } 
+
+            }
+            else
+            {
+                MachineNameTextBox.Text = Properties.Settings.Default.MachineName;
+            }
+            #endregion Server
+
 
 
 
@@ -145,8 +170,26 @@ namespace qubic_miner_helper
             Dispatcher.Invoke(() =>
             {
                 IterationsOverallBox.Text = iterationsOverall.ToString().Replace(",",".");
+                if (ServerActive)
+                {
+                    if (Client != null && Client.IsConnected)
+                    {
+                        if (ServerConnectionLastSentData.AddSeconds(Properties.Settings.Default.ServerTransferEverySeconds) < DateTime.Now)
+                        {
+                            sendData();
+                        }
+                    }
+                    else
+                    {
+                        if (ServerConnectionLastTry.AddSeconds(10) < DateTime.Now)
+                        {
+                            ServerConnectionLastTry = DateTime.Now;
+                            ServerReconnect();
+                        }
+                            
+                    }
+                }
             });
-           
         }
 
         private object CollectIterations()
@@ -155,7 +198,10 @@ namespace qubic_miner_helper
             foreach (var threadDetails in _threadDetailsControlsList)
             {
                 iterationsCount += threadDetails.Value.Iterations;
+                currentQinerVersion = threadDetails.Value.qinerVersion;
             }
+            IterationsOverall = (float)iterationsCount;
+            
             return iterationsCount;
         }
 
@@ -358,23 +404,35 @@ namespace qubic_miner_helper
         {
             if (Properties.Settings.Default.MinerPath != "" && File.Exists(Properties.Settings.Default.MinerPath))
             {
-                var top10Process = new ProcessStartInfo();
-                top10Process.FileName = Properties.Settings.Default.MinerPath;
-                top10Process.Arguments = "0 0 5";
-                top10Process.WorkingDirectory = System.IO.Path.GetDirectoryName(Properties.Settings.Default.MinerPath);
-                top10Process.UseShellExecute = true;
-                top10Process.CreateNoWindow = false;
-                top10Process.WindowStyle = ProcessWindowStyle.Normal;
-                _ = new Process() { StartInfo = top10Process }.Start();
+                try
+                {
+                    var top10Process = new ProcessStartInfo();
+                    top10Process.FileName = Properties.Settings.Default.MinerPath;
+                    var onlyMinerId = Properties.Settings.Default.MinerID.Split(' ')[0];
+                    top10Process.Arguments = onlyMinerId + " 0 5";
+                    top10Process.WorkingDirectory = System.IO.Path.GetDirectoryName(Properties.Settings.Default.MinerPath);
+                    top10Process.UseShellExecute = true;
+                    top10Process.CreateNoWindow = false;
+                    top10Process.WindowStyle = ProcessWindowStyle.Normal;
+                    _ = new Process() { StartInfo = top10Process }.Start();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("Could not start top10 process: " + exception.Message);
+                }
+
             }
         }
 
-        private void onCommandLineTextChanged(object sender, TextChangedEventArgs e)
-        {
-            Properties.Settings.Default.MinerID = minerID.Text;
-            Properties.Settings.Default.Save();
+        private void onCommandLineTextChanged(object sender, TextChangedEventArgs e){
+            if (minerID.Text != String.Empty)
+            {
+                Properties.Settings.Default.MinerID = minerID.Text;
+                Properties.Settings.Default.Save();
+            }
         }
 
+        /*
         private void CheckBoxAutostartOnWindowsStart_OnUnChecked(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.AutoStartOnWindowsStart = (bool)this.CheckBoxAutostartOnWindowsStart.IsChecked;
@@ -388,23 +446,172 @@ namespace qubic_miner_helper
             Properties.Settings.Default.Save();
             Startup.RemoveFromStartup("qubic-miner-helper");
         }
+        */
 
         private void onMachineNameTextChanged(object sender, TextChangedEventArgs e)
         {
-            Properties.Settings.Default.MachineName = MachineNameTextBox.Text;
-            Properties.Settings.Default.Save();
+            if (MachineNameTextBox.Text != String.Empty)
+            {
+                Properties.Settings.Default.MachineName = MachineNameTextBox.Text;
+                Properties.Settings.Default.Save();
+            }
         }
 
         private void CheckBoxConnectToServer_OnChecked(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.ConnectToServer = (bool)this.CheckBoxConnectToServer.IsChecked;
             Properties.Settings.Default.Save();
+
+            if (!ServerActive)
+            {
+                StartServerConnection();
+            }
         }
 
         private void CheckBoxConnectToServer_OnUnChecked(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.ConnectToServer = (bool)this.CheckBoxConnectToServer.IsChecked;
             Properties.Settings.Default.Save();
+            
+            if (ServerActive)
+            {
+                StopServerConnection();
+            }
+        }
+
+        private void onServerAddressTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (serverAddressTextBox.Text != String.Empty)
+            {
+                Properties.Settings.Default.ServerAddress = serverAddressTextBox.Text;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        /*
+        private void CheckBoxTransferAllMessages_onChecked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.ServerTransferAllMessages = (bool)this.CheckBoxTransferAllMessages.IsChecked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void CheckBoxTransferAllMessages_onUnChecked(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.ServerTransferAllMessages = (bool)this.CheckBoxTransferAllMessages.IsChecked;
+            Properties.Settings.Default.Save();
+        }*/
+
+        public void StartServerConnection()
+        {
+            Console.WriteLine("StartServerConnection");
+            try
+            {
+                ServerActive = true;
+
+                if (Properties.Settings.Default.ServerAddress != String.Empty)
+                {
+                    Client = new SimpleTcpClient(Properties.Settings.Default.ServerAddress);
+
+                    Client.Events.Connected += Client_Connected;
+                    Client.Events.Disconnected += Client_Disconnected;
+                    Client.Events.DataReceived += Client_DataReceived;
+                    Client.Connect();
+                }
+            }
+            catch (Exception e)
+            {
+                serverConnectionStatusTextBox.Text = e.Message;
+            }
+
+        }
+
+        public void ServerReconnect()
+        {
+            Console.WriteLine("Reconnecting to server...");
+            try
+            {
+                Client.Connect();
+            }
+            catch (Exception e)
+            {
+                serverConnectionStatusTextBox.Text = "Could not connect: " + e.Message;
+                Console.WriteLine("Could not connect to server...");
+            }
+        }
+
+        public void StopServerConnection()
+        {
+            Console.WriteLine("StopServerConnection");
+            try
+            {
+                ServerActive = false;
+                if (Client.IsConnected)
+                {
+                    Client.Events.Connected -= Client_Connected;
+                    Client.Events.Disconnected -= Client_Disconnected;
+                    Client.Events.DataReceived -= Client_DataReceived;
+                    Client.Disconnect();
+                    Client.Dispose();
+                }
+                serverConnectionStatusTextBox.Text = "disconnected";
+            }
+            catch (Exception e)
+            {
+                serverConnectionStatusTextBox.Text = e.Message;
+            }
+
+        }
+
+        private void Client_DataReceived(object sender, SimpleTcp.DataReceivedEventArgs e)
+        {
+            Console.WriteLine("Client received data from server: " + e.Data);
+        }
+
+        private void Client_Disconnected(object sender, ConnectionEventArgs e)
+        {
+            Console.WriteLine("Client disconnected from server: " + e.IpPort);
+            serverConnectionStatusTextBox.Text = "disconnected";
+        }
+
+        private void Client_Connected(object sender, ConnectionEventArgs e)
+        {
+            Console.WriteLine("Client connected to server: " + e.IpPort);
+            serverConnectionStatusTextBox.Text = "connected";
+        }
+
+
+        private void sendData()
+        {
+            MachineState machineState = new MachineState();
+            machineState.currentCommandLine = minerID.Text;
+            machineState.currentMachineDateTime = DateTime.Now;
+            machineState.currentMinerPath = minerPath.Text;
+            machineState.machineName = MachineNameTextBox.Text;
+            machineState.overallWorkerCount = _threadDetailsControlsList.Count;
+            machineState.overallCurrentIterationsPerSecond = IterationsOverall;
+            machineState.overallSessionErrorsFound = ErrorsReduced;
+            machineState.currentMinerVersion = currentQinerVersion;
+            machineState.overallThreadCount = 0;
+
+            if (Client.IsConnected)
+            {
+                Console.WriteLine("Sending data...");
+                Client.Send(JsonConvert.SerializeObject(machineState) + Environment.NewLine);
+                Console.WriteLine("Data sent!");
+            }
+            else
+            {
+                Console.WriteLine("Client not connected...");
+            }
+        }
+
+        private void ForceReconnectButton_onClick(object sender, RoutedEventArgs e)
+        {
+            if (ServerActive)
+            {
+                StopServerConnection();
+            }
+            StartServerConnection();
         }
     }
 }

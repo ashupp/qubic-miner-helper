@@ -52,6 +52,7 @@ namespace qubic_miner_helper
         public double Layers;
         public double Neurons;
         public double Time;
+        public string qinerVersion;
 
         #region DependencyProperties
         public static readonly DependencyProperty KeyProperty = DependencyProperty.Register("Key", typeof(int), typeof(ThreadDetailsControl));
@@ -348,6 +349,18 @@ namespace qubic_miner_helper
 
 
 
+            // Get Version ([v0.4.3])
+            try
+            {
+                if (eData.Contains("[v"))
+                {
+                    qinerVersion = eData.Split(new string[] { "[v" }, StringSplitOptions.None)[1].Split(new string[] { "]" }, StringSplitOptions.None)[0];
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error during setting of version. " + e.Message);
+            }
 
             try
             {
