@@ -19,7 +19,7 @@
         <Button Content="Set Miner Path" HorizontalAlignment="Left" Margin="1021,63,0,0" VerticalAlignment="Top" Width="130" Click="SetMinerPathClick" Height="23" RenderTransformOrigin="0.503,0.3"/>
         <TextBox Name="minerPath" HorizontalAlignment="Left" Height="23" Margin="179,63,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="837" />
         <Border Margin="10,356,0,10" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1" Grid.ColumnSpan="2">
-            <ScrollViewer x:Name="propertyScrollViewer" Height="auto" VerticalAlignment="Stretch" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Margin="0,0,9,0">
+            <ScrollViewer x:Name="propertyScrollViewer" Height="auto" VerticalAlignment="Stretch" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Margin="0,9,9,0">
                 <StackPanel x:Name="propertySliderStackPanel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
             </ScrollViewer>
 
@@ -57,14 +57,18 @@
         <GroupBox Header="Worker information" HorizontalAlignment="Left" Height="53" Margin="10,298,0,0" VerticalAlignment="Top" Width="1141">
             <Grid>
                 <Label Content="Overall Iterations/s: " HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="125" Height="26"/>
-                <TextBox HorizontalAlignment="Left" IsEnabled="False" Name="IterationsOverallBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="145" Margin="129,4,0,0"/>
+                <TextBox HorizontalAlignment="Left" IsReadOnly="True" Name="IterationsOverallBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="145" Margin="129,4,0,0"/>
                 <Label Content="Overall Errors found in Session: " HorizontalAlignment="Left" Margin="279,1,0,0" VerticalAlignment="Top" Width="180" Height="26"/>
-                <TextBox HorizontalAlignment="Left" IsEnabled="False" x:Name="ErrorsReducedOverallBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="176" Margin="464,4,0,0"/>
-                <Label Content="(May be wrong if sending fails etc.)" HorizontalAlignment="Left" Margin="645,1,0,0" VerticalAlignment="Top" Width="198" Height="26"/>
+                <TextBox HorizontalAlignment="Left" IsReadOnly="True" x:Name="ErrorsReducedOverallBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="176" Margin="464,4,0,0"/>
+                <Label Content="Current CPU Temp:" HorizontalAlignment="Left" Margin="662,1,0,0" VerticalAlignment="Top" Width="113" Height="26"/>
+                <TextBox HorizontalAlignment="Left" IsReadOnly="True" x:Name="CPUTemperaturesTextBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="110" Margin="780,3,0,0"/>
+                <Label Content="CPU Load % avg:" HorizontalAlignment="Left" Margin="900,1,0,0" VerticalAlignment="Top" Width="104" Height="26"/>
+                <TextBox HorizontalAlignment="Left" IsReadOnly="True" x:Name="CPULoadsTextBox" Height="23" TextWrapping="Wrap" Text="waiting for data..." VerticalAlignment="Top" Width="110" Margin="1009,3,0,0"/>
             </Grid>
         </GroupBox>
         <!--<CheckBox x:Name="CheckBoxAutostartOnWindowsStart" Content="Autostart on Windows start" HorizontalAlignment="Left" Margin="328,38,0,0" VerticalAlignment="Top" Checked="CheckBoxAutostartOnWindowsStart_OnChecked" Unchecked="CheckBoxAutostartOnWindowsStart_OnUnChecked" Height="20" Width="178"/>-->
 
 
     </Grid>
+
 </Window>

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using GetCoreTempInfoNET;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using SimpleTcp;
@@ -31,6 +33,8 @@ namespace qubic_miner_helper
         private DateTime ServerConnectionLastTry = DateTime.Now;
         private DateTime ServerConnectionLastSentData = DateTime.Now;
         private string currentQinerVersion = String.Empty;
+        private DateTime lastErrorReductionByMachineDateTime = default;
+        private GetCoreTempInfoNET.CoreTempInfo coreTempInfo = new CoreTempInfo();
 
 
         public MainWindow()
@@ -39,10 +43,14 @@ namespace qubic_miner_helper
             this.DataContext = this;
             this.mainWindowRef = this;
             InitApp();
+
+            Title = Title + " - " + Assembly.GetEntryAssembly().GetName().Version.ToString();
         }
 
         private void InitApp()
         {
+            UpgradeSettings();
+
             #region Initialize miner config
             this.minerPath.Text = Properties.Settings.Default.MinerPath;
             this.minerID.Text = Properties.Settings.Default.MinerID;
@@ -51,7 +59,7 @@ namespace qubic_miner_helper
             this.CheckBoxAutostartOnOpen.IsChecked = Properties.Settings.Default.AutoStart;
             this.CheckBoxAutoRestartOnInactivity.IsChecked = Properties.Settings.Default.AutoRestartInactive;
             this.CheckBoxAutoRestartOnCrash.IsChecked = Properties.Settings.Default.AutoRestartCrashed;
-
+            
             if (!Debugger.IsAttached)
             {
                 if (Startup.IsInStartup("qubic-miner-helper", System.Reflection.Assembly.GetExecutingAssembly().Location))
@@ -99,6 +107,23 @@ namespace qubic_miner_helper
                 {
                     StartAllThreads();
                 }
+            }
+        }
+
+        /**
+         * Try upgrade settings from previous version
+         */
+        private void UpgradeSettings()
+        {
+            try
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.Save();
+                Properties.Settings.Default.Reload();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Could not upgrade settings: " + e.Message);
             }
         }
 
@@ -163,13 +188,94 @@ namespace qubic_miner_helper
         {
             ErrorsReduced += e.ErrorCount;
             ErrorsReducedOverallBox.Text = ErrorsReduced.ToString();
+            lastErrorReductionByMachineDateTime = DateTime.Now;
         }
 
         private void CollectDataTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+
             var iterationsOverall = CollectIterations();
             Dispatcher.Invoke(() =>
             {
+
+                // Read CPU Data 
+                try
+                {
+                    if (coreTempInfo.GetData())
+                    {
+                        var cpuTempString = string.Empty;
+                        var cpuLoadString = string.Empty;
+
+                        var cpuCount = (int)coreTempInfo.GetCPUCount;
+                        uint cpuIndex;
+                        if (cpuCount > 0)
+                        {
+                            // Iterate all CPUs
+                            for (uint i = 0; i < cpuCount; i++)
+                            {
+                                List<float> CPUTemperaturesList = new List<float>();
+                                List<float> CPULoadsList = new List<float>();
+
+                                uint CPUCoreCount = coreTempInfo.GetCoreCount;
+                                // Iterate all Cores
+                                for (uint g = 0; g < CPUCoreCount; g++)
+                                {
+                                    cpuIndex = g + (i * CPUCoreCount);
+                                    CPUTemperaturesList.Add(coreTempInfo.GetTemp[cpuIndex]);
+                                    CPULoadsList.Add(coreTempInfo.GetCoreLoad[cpuIndex]);
+                                }
+
+
+                                if (i == 1)
+                                {
+                                    cpuTempString += ", ";
+                                    cpuLoadString += ", ";
+                                }
+
+
+                                cpuTempString += (int)CPUTemperaturesList.Max();
+                                cpuLoadString += (int)CPULoadsList.Average();
+
+                            }
+
+                            CPUTemperaturesTextBox.Text = cpuTempString;
+                            CPULoadsTextBox.Text = cpuLoadString;
+                            
+                            /*
+                            for (int i = 0; i < cpuCount; i++)
+                            {
+
+                                Console.WriteLine("found cpu: " + i);
+                                var cpuTemp = coreTempInfo.GetTemp[i];
+                                Console.WriteLine("temperature: " + cpuTemp);
+                                if (i > 0)
+                                {
+                                    cpuTempString += ", ";
+                                }
+
+                                cpuTempString += cpuTemp;
+
+
+                            }*/
+                            CPUTemperaturesTextBox.Text = cpuTempString;
+                        }
+                        else
+                        {
+                            CPUTemperaturesTextBox.Text = "not available";
+                            CPULoadsTextBox.Text = "not available";
+                        }
+                    }
+                    else
+                    {
+                        CPUTemperaturesTextBox.Text = "not available";
+                        CPULoadsTextBox.Text = "not available";
+                    }
+                }
+                catch (Exception exception)
+                {
+                    CPUTemperaturesTextBox.Text = "not available";
+                }
+                
                 IterationsOverallBox.Text = iterationsOverall.ToString().Replace(",",".");
                 if (ServerActive)
                 {
@@ -591,10 +697,14 @@ namespace qubic_miner_helper
             machineState.overallWorkerCount = _threadDetailsControlsList.Count;
             machineState.overallCurrentIterationsPerSecond = IterationsOverall;
             machineState.overallSessionErrorsFound = ErrorsReduced;
+            machineState.lastErrorReductionByMachineDateTime = lastErrorReductionByMachineDateTime;
             machineState.currentMinerVersion = currentQinerVersion;
             machineState.currentHelperVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             machineState.overallThreadCount = 0;
             machineState.currentWorkerStates = new List<WorkerState>();
+            machineState.overallRestartTimes = 0;
+            machineState.currentCPUTemps = CPUTemperaturesTextBox.Text;
+            machineState.currentCPULoads = CPULoadsTextBox.Text;
 
             foreach (var threadDetails in _threadDetailsControlsList)
             {
@@ -603,7 +713,9 @@ namespace qubic_miner_helper
                     var workerState = new WorkerState();
                     workerState.errorsLeftText = threadDetails.Value.ErrorsBox.Text;
                     workerState.rankText = threadDetails.Value.RankBox.Text;
+                    workerState.workerRestartedTimes = threadDetails.Value.restartCounter;
                     machineState.currentWorkerStates.Add(workerState);
+                    machineState.overallRestartTimes += workerState.workerRestartedTimes;
                 }
                 catch (Exception e)
                 {

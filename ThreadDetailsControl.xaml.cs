@@ -18,9 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml;
-using CliWrap;
 using qubic_miner_helper.Properties;
-using Xceed.Wpf.Toolkit.Core.Converters;
 using Timer = System.Timers.Timer;
 
 namespace qubic_miner_helper
@@ -46,7 +44,7 @@ namespace qubic_miner_helper
         private TimeSpan waitUntilTimeout;
 
         public int ThreadIndex;
-        private int restartCounter;
+        public int restartCounter;
         public double Iterations;
         public double Errors;
         public double Layers;
@@ -107,7 +105,7 @@ namespace qubic_miner_helper
             //currentMinerProcess.OutputDataReceived += (sender, args) => Console.WriteLine("received output: {0}", args.Data);
             currentMinerProcess.OutputDataReceived += CurrentMinerProcess_OutputDataReceived;
             currentMinerProcess.ErrorDataReceived += CurrentMinerProcess_ErrorDataReceived;
-            currentMinerProcess.Exited += CurrentMinerProcess_Exited;
+            currentMinerProcess.Exited += CurrentMinerProcess_Exited; 
             
             var started = currentMinerProcess.Start();
 
