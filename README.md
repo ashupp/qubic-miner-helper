@@ -34,6 +34,7 @@ Helper Server project: https://github.com/ashupp/qubic-miner-helper-server
 - Take care - if the tool crashes you might have zombie Qiner threads which you have to stop manually
 - No Virus, no bullshit but no support also 🙂 
 
-![image](https://user-images.githubusercontent.com/1867828/149675551-b58862a2-5fc0-4dff-a91e-d70fba9fbcb5.png)
+![image](https://user-images.githubusercontent.com/1867828/149851622-fe024efd-c8ce-488d-a03d-3c2197b508c7.png)
+
 
 
