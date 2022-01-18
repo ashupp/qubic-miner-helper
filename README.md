@@ -9,6 +9,13 @@ Helper Server project: https://github.com/ashupp/qubic-miner-helper-server
 **Set your miner executable and Insert your ID, desired thread count and seconds until update into command line box.**   
 **Then click on save command line**
 
+## Version 1.1.2.0
+- Improved UI by making text boxes readonly instead of disabled. Looks better and you can copy the values
+- Added display of temperatures and load (needs coretemp running to show values: https://www.alcpu.com/CoreTemp/)
+- Temperatures, load, time of last error reduction and overall restart times are transferred to server
+- Added icon
+- Removed unneccesary ressources
+
 ## Version 1.1.1.0
 - Extended data is being sent to server. 
 - Current rank, current pool errors left, current helper version
