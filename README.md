@@ -1,7 +1,7 @@
 # qubic-miner-helper
 
 ### Helps to easy run multiple Qiner worker instances with same command line params.
-#### Its now compatible with Qiner 0.4.4 and has auto restart on detected inactivity and on crashes / worker process close. 
+#### Its now compatible with Qiner 0.5.0 and 0.4.4 and has auto restart on detected inactivity and on crashes / worker process close. 
 
 Download latest version: https://github.com/ashupp/qubic-miner-helper/releases/latest  
 Helper Server project: https://github.com/ashupp/qubic-miner-helper-server 
