@@ -1,3 +1,5 @@
+# Information: This tool became obsolete because qubic switched to efi. Maybe work will continue when a windows miner becomes available.
+
 # qubic-miner-helper
 
 ### Helps to easy run multiple Qiner worker instances with same command line params.
